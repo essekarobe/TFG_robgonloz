@@ -1,0 +1,18 @@
+# LaTeX auxiliares
+*.aux
+*.log
+*.toc
+*.synctex.gz
+*.out
+*.fls
+*.fdb_latexmk
+*.bbl
+*.blg
+*.lof
+*.lot
+*.idx
+*.ind
+*.ilg
+
+# El PDF sí lo puedes incluir o no, elige:
+# doc/*.pdf
