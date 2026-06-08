@@ -1,74 +1,339 @@
-\documentclass[12pt,a4paper]{report}
+\documentclass[12pt, a4paper]{article}
 
-% --- Codificación e idioma ---
+% ─── Codificación y idioma ───────────────────────────────────────────────────
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish]{babel}
 
-% --- Paquetes generales ---
+% ─── Diseño de página ────────────────────────────────────────────────────────
+\usepackage[top=3cm, bottom=3cm, left=3cm, right=3cm]{geometry}
+\usepackage{setspace}
+\onehalfspacing
+
+% ─── Tipografía ──────────────────────────────────────────────────────────────
+\usepackage{lmodern}
+
+% ─── Matemáticas y estadística ───────────────────────────────────────────────
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+
+% ─── Figuras y tablas ────────────────────────────────────────────────────────
 \usepackage{graphicx}
-\usepackage{geometry}
-\geometry{margin=2.5cm}
+\usepackage{float}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{caption}
+\usepackage{subcaption}
 
-% --- Datos del trabajo ---
-\newcommand{\tituloTFG}{BBDDs aplicadas a la inteligencia artificial: análisis sobre las plantas}
-\newcommand{\autorTFG}{Roberto González Lozano}
-\newcommand{\tutorTFG}{Nombre del tutor/a}
-\newcommand{\gradoTFG}{Grado en Estadística\ldots}
-\newcommand{\cursoTFG}{Curso 2025/2026}
+% ─── Código fuente ───────────────────────────────────────────────────────────
+\usepackage{listings}
+\usepackage{xcolor}
 
+\lstset{
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{blue},
+  commentstyle=\color{gray},
+  stringstyle=\color{orange},
+  breaklines=true,
+  frame=single,
+  numbers=left,
+  numberstyle=\tiny\color{gray},
+  language=Python
+}
+
+% ─── Hipervínculos ───────────────────────────────────────────────────────────
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=red
+}
+
+% ─── Bibliografía ────────────────────────────────────────────────────────────
+\usepackage{natbib}
+
+% ─── Teoremas y definiciones ─────────────────────────────────────────────────
+\newtheorem{definition}{Definición}
+\newtheorem{theorem}{Teorema}
+
+% ─────────────────────────────────────────────────────────────────────────────
 \begin{document}
 
-% =====================================================
-% PORTADA
-% =====================================================
+% ─── Preportada ──────────────────────────────────────────────────────────────
 \begin{titlepage}
-    \centering
+  \centering
+  \vspace*{3cm}
 
-    \includegraphics[width=0.35\textwidth]{imagenes/logo_us}\par
-    \vspace{1cm}
+  \includegraphics[width=6cm]{imagenes/logo_us.png} \\[3cm]
+\begin{minipage}{0.8\textwidth}
+  \centering
+  \setstretch{1.4}
+  {\LARGE \textbf{Diseño de una base de datos orientada a la inteligencia artificial para un sistema de recomendación de plantas con análisis estadístico}}
+\end{minipage} \\[2cm]
 
-    {\large Universidad de Sevilla\par}
-    {\large \gradoTFG\par}
 
-    \vspace{2.5cm}
+  {\large \textbf{Roberto González Lozano}}
 
-    {\Huge \bfseries \tituloTFG \par}
-
-    \vspace{2cm}
-
-    \vfill
-
-    {\large Autor: \autorTFG\par}
-    {\large Tutor/a: \tutorTFG\par}
-
-    \vspace{1cm}
-
-    {\large \cursoTFG\par}
-
+  \vfill
 \end{titlepage}
 
-% =====================================================
-% ÍNDICE
-% =====================================================
-\tableofcontents
+% ─── Página en blanco ─────────────────────────────────────────────────────────
+\newpage
+\thispagestyle{empty}
+\mbox{}
 \newpage
 
-% =====================================================
-% CAPÍTULOS
-% =====================================================
-\chapter{Introducción}
+% ─── Portada ─────────────────────────────────────────────────────────────────
+\begin{titlepage}
+  \centering
+  \vspace*{1cm}
 
-\chapter{Estado del arte}
+  % Logo — pon logo_us.png en doc/imagenes/
+  \includegraphics[width=4.5cm]{imagenes/logo_us.png} \\[2cm]
 
-\chapter{Desarrollo}
+  % Título
+{\large \textbf{Diseño de una base de datos orientada a la inteligencia\\[0.1cm]
+  artificial para un sistema de recomendación de plantas\\[0.1cm]
+  con análisis estadístico}} \\[2cm]
 
-\chapter{Conclusiones}
+  % Autor
+  {\normalsize Roberto González Lozano} \\[4cm]
 
-% =====================================================
-% BIBLIOGRAFÍA
-% =====================================================
-% \bibliography{bibliografia}
-% \bibliographystyle{plain}
+  % Bloque memoria + tutores (alineado al centro-derecha como en el ejemplo)
+  \hfill
+  \begin{minipage}{0.6\textwidth}
+    {\small Memoria presentada como parte de los requisitos
+    para la obtención del título de Grado en Estadística
+    por la Universidad de Sevilla.} \\[0.8cm]
+    {\small Tutorizado por} \\[0.2cm]
+    {\small David Orellana Martín} \\
+    {\small Agustín Riscos Núñez}
+  \end{minipage}
+
+  \vfill
+
+\end{titlepage}
+\newpage
+
+% ─── Índices ─────────────────────────────────────────────────────────────────
+\tableofcontents
+\newpage
+\listoffigures
+\listoftables
+\newpage
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Introducción}
+\label{sec:intro}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Motivación}
+% TODO: Contextualizar la importancia de los sistemas de recomendación en
+% agricultura y jardinería. Problema real: elegir qué plantar según clima y suelo
+% es complejo y la información está dispersa.
+
+\subsection{Objetivos}
+Los objetivos principales de este trabajo son:
+
+\begin{enumerate}
+  \item Diseñar una base de datos relacional estructurada específicamente para
+        soportar modelos de IA y análisis estadístico en el dominio botánico.
+  \item Integrar y normalizar datos de fuentes abiertas heterogéneas (APIs
+        botánicas, datos climáticos).
+  \item Desarrollar e implementar modelos estadísticos y de aprendizaje
+        automático para la recomendación de plantas.
+  \item Evaluar los modelos con métricas estadísticas robustas e interpretar
+        los resultados de forma explicable.
+  \item Demostrar que el diseño de la base de datos influye en la calidad
+        predictiva de los modelos.
+\end{enumerate}
+
+\subsection{Estructura del documento}
+% TODO: Breve descripción de cada capítulo.
+
+\subsection{Alcance y limitaciones}
+% TODO: Qué cubre y qué no cubre el TFG.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Estado del Arte}
+\label{sec:estado_arte}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Sistemas de recomendación en agricultura}
+% TODO: Revisión de literatura sobre crop recommendation systems.
+% Citar trabajos de Random Forest, XGBoost aplicados a recomendación agrícola.
+
+\subsection{Bases de datos para Inteligencia Artificial}
+% TODO: Importancia del diseño de BBDD en pipelines de ML.
+% Concepto de "data-centric AI" vs "model-centric AI".
+
+\subsection{Modelos estadísticos aplicados a botánica}
+% TODO: Regresión logística, análisis discriminante, clustering en clasificación
+% de plantas.
+
+\subsection{Herramientas y datasets disponibles}
+% TODO: Trefle API, Perenual API, PlantNet, GBIF, datasets de Kaggle.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Fuentes de Datos}
+\label{sec:datos}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{APIs botánicas}
+
+\subsubsection{Trefle API}
+% TODO: Descripción de la API, variables disponibles, proceso de extracción.
+
+\subsubsection{Perenual API}
+% TODO: Descripción, datos de cuidados, enfermedades, imágenes.
+
+\subsection{Datos climáticos}
+% TODO: Open-Meteo API u otra fuente abierta. Variables: temperatura, lluvia,
+% humedad, horas de sol por zona geográfica.
+
+\subsection{Análisis exploratorio de los datos brutos}
+% TODO: Estadísticos descriptivos, valores nulos, distribuciones, outliers.
+% Incluir figuras con histogramas y boxplots.
+
+\subsection{Calidad y preprocesamiento}
+% TODO: Tratamiento de missings, normalización, encoding de variables categóricas.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Diseño de la Base de Datos}
+\label{sec:bbdd}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Requisitos del sistema}
+% TODO: Qué información necesita almacenar la BBDD para que los modelos
+% funcionen correctamente.
+
+\subsection{Modelo Entidad-Relación}
+% TODO: Diagrama ER. Entidades: Planta, Zona, Clima, Suelo, Prediccion, Usuario.
+
+\subsection{Modelo relacional}
+% TODO: Tablas, claves primarias, claves foráneas, índices.
+
+\subsection{Justificación estadística del diseño}
+% TODO: Por qué esta estructura facilita el análisis estadístico.
+% Normalización vs desnormalización para queries analíticas.
+
+\subsection{Implementación}
+% TODO: SQLite para desarrollo, PostgreSQL para producción.
+% Scripts de creación de tablas y carga de datos.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Análisis Estadístico Exploratorio}
+\label{sec:eda}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Distribución de especies}
+% TODO: ¿Hay clases desbalanceadas? Long-tail distribution.
+% Implicaciones para el modelado.
+
+\subsection{Correlaciones entre variables}
+% TODO: Matriz de correlación. Variables más relevantes para la recomendación.
+% Test de Spearman, Pearson según tipo de variable.
+
+\subsection{Análisis de componentes principales (PCA)}
+% TODO: Reducción de dimensionalidad, varianza explicada.
+
+\subsection{Clustering exploratorio}
+% TODO: K-means o DBSCAN para agrupar plantas por características similares.
+% Validación con índice de Silhouette.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Modelos Estadísticos y de Inteligencia Artificial}
+\label{sec:modelos}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Definición del problema}
+% TODO: Formalización matemática. Input: (zona, suelo, clima) → Output: lista
+% de plantas recomendadas con puntuación.
+
+\subsection{Modelos estadísticos clásicos}
+
+\subsubsection{Regresión logística multinomial}
+% TODO: Baseline estadístico. Interpretación de coeficientes.
+
+\subsubsection{Análisis discriminante lineal (LDA)}
+% TODO: Supuestos, aplicación, resultados.
+
+\subsection{Modelos de aprendizaje automático}
+
+\subsubsection{Random Forest}
+% TODO: Importancia de variables, hiperparámetros, validación cruzada.
+
+\subsubsection{XGBoost}
+% TODO: Gradient boosting, early stopping, curvas de aprendizaje.
+
+\subsection{Comparativa de modelos}
+% TODO: Tabla comparativa con Accuracy, F1-macro, AUC-ROC, tiempo de inferencia.
+
+\subsection{Análisis de incertidumbre}
+% TODO: Intervalos de confianza en las predicciones.
+% Calibración probabilística (Platt scaling, isotonic regression).
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Sistema de Recomendación}
+\label{sec:sistema}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Arquitectura del sistema}
+% TODO: Diagrama de componentes. Pipeline completo: entrada → BBDD → modelo → salida.
+
+\subsection{Interfaz de usuario}
+% TODO: API REST en FastAPI o interfaz web sencilla.
+% Ejemplo: "Para Sevilla, suelo arcilloso, pleno sol → Romero (IC 94%), Lavanda (IC 87%)..."
+
+\subsection{Explicabilidad de las recomendaciones}
+% TODO: SHAP values para explicar por qué se recomienda cada planta.
+% Integración con LLM para generar explicaciones en lenguaje natural.
+
+\subsection{Validación con usuarios}
+% TODO: Si aplica, pequeña prueba de usabilidad.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Evaluación y Resultados}
+\label{sec:resultados}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Métricas de evaluación}
+% TODO: Justificación estadística de las métricas elegidas.
+% Más allá del accuracy: F1, MCC, Brier Score.
+
+\subsection{Validación cruzada estratificada}
+% TODO: k-fold estratificado para clases desbalanceadas.
+% Resultados con media y desviación típica.
+
+\subsection{Análisis de errores}
+% TODO: Matriz de confusión, casos donde falla el modelo y por qué.
+
+\subsection{Impacto del diseño de la BBDD en los resultados}
+% TODO: Experimento: mismos modelos con BBDD bien diseñada vs. diseño plano.
+% Diferencias en rendimiento y tiempo de entrenamiento.
+
+% ═════════════════════════════════════════════════════════════════════════════
+\section{Conclusiones y Trabajo Futuro}
+\label{sec:conclusiones}
+% ═════════════════════════════════════════════════════════════════════════════
+
+\subsection{Conclusiones}
+% TODO: Resumen de lo conseguido. ¿Se han cumplido los objetivos?
+
+\subsection{Trabajo futuro}
+% TODO:
+% - Ampliar a identificación por foto (Pl@ntNet API)
+% - Datos de IoT (sensores de suelo en tiempo real)
+% - Modelos de series temporales para predicción estacional
+% - App móvil
+
+% ═════════════════════════════════════════════════════════════════════════════
+% Bibliografía
+% ═════════════════════════════════════════════════════════════════════════════
+\newpage
+\bibliographystyle{plainnat}
+% \bibliography{referencias}  % Descomentar cuando exista referencias.bib
 
 \end{document}
